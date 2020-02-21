@@ -58,8 +58,101 @@ awk -F '\t' -v state1="$state1" -v state2="$state2" '($11~state1) || ($11~state2
 - `($11~state1) || ($11~state2)`, menggunakan operasi OR karena untuk mendapatkan hasil dari keduanya.
 
 
+# **Nomor 2**
+### Soal
+```
+Pada suatu siang, laptop Randolf dan Afairuzr dibajak oleh seseorang dan kehilangan
+data-data penting. Untuk mencegah kejadian yang sama terulang kembali mereka
+meminta bantuan kepada Whits karena dia adalah seorang yang punya banyak ide.
+Whits memikirkan sebuah ide namun dia meminta bantuan kalian kembali agar ide
+tersebut cepat diselesaikan. Idenya adalah kalian (a) membuat sebuah script bash yang
+dapat menghasilkan password secara acak sebanyak 28 karakter yang terdapat huruf
+besar, huruf kecil, dan angka. (b) Password acak tersebut disimpan pada file berekstensi
+.txt dengan nama berdasarkan argumen yang diinputkan dan HANYA berupa alphabet.
+(c) Kemudian supaya file .txt tersebut tidak mudah diketahui maka nama filenya akan di
+enkripsi dengan menggunakan konversi huruf (string manipulation) yang disesuaikan
+dengan jam(0-23) dibuatnya file tersebut dengan program terpisah dengan (misal:
+password.txt dibuat pada jam 01.28 maka namanya berubah menjadi qbttxpse.txt
+dengan perintah ‘bash soal2_enkripsi.sh password.txt’. Karena p adalah huruf ke 16 dan
+file dibuat pada jam 1 maka 16+1=17 dan huruf ke 17 adalah q dan begitu pula
+seterusnya. Apabila melebihi z, akan kembali ke a, contoh: huruf w dengan jam 5.28,
+maka akan menjadi huruf b.) dan (d) jangan lupa untuk membuat dekripsinya supaya
+nama file bisa kembali.
+```
+#### Penjelasan Soal
+Soal 2 diminta untuk menyimpan random password di dalam sebuah file yang dapat dienkripsi maupun didekripsi.
+##### Soal 2a
+Membuat sebuah bash script yang dapat membuat sebuah random password secara acak sebanyak 28 karakter yang terdapat huruf
+besar, huruf kecil, dan angka.
+```
+code=$(</dev/urandom tr -dc 'a-zA-Z0-9' | head -c 28)
+```
+- `code`, mendeklarasikan variabel untuk menyimpan hasil dari proses script itu sendiri.
+- `</dev/urandom tr -dc 'a-zA-Z0-9` deklarasi dan fungsi untuk membuat randomm password, deklarasi terdiri dari huruf a-z, A-Z, dan 0-9
+- `head -c 28`, huruf dan angka yang dihasilkan mencapai 28 karakter
 
+##### Soal 2b 
+Menyimpan password acak yang telah dihasilkan ke dalam sebuah file.txt, dengan ketentuan nama file hanya boleh diisi huruf alphabet.
 
+`newpass=$1
+code=$(</dev/urandom tr -dc 'a-zA-Z0-9' | head -c 28)
+echo $code > "$newpass".txt` 
+- `newpass=$1`, membuat variabel untuk menyimpan random password ke file baru
+- `echo $code > "$newpass".txt`, melakukan push random password ke file baru
 
+##### Soal 2c
+Nama file yang telah dibuat kemudian dienkripsi dengan menggunakan konversi huruf (string manipulation) yang disesuaikan
+dengan jam(0-23) dibuatnya file tersebut dengan program, misal jika huruf yang diketik adalah p dan dibuat pada pukul 01.28, p adalah huruf ke 16 dan file dibuat pada jam 1 maka 16+1=17 dan huruf ke 17 adalah q dan begitu pula seterusnya.
 
+##### Soal 2d
+Melakukan dekripsi sehingga nama file bisa kembali normal.
 
+Hambatan mengerjakan nomor 2 : 
+- masih bingung cara memasukkan variabel file baru ke dalam algoritma membuat enkripsi nama file (masih error)
+- belum menemukan cara melakukan dekripsi nama file
+
+# **Nomor 3**
+### Soal
+```
+1 tahun telah berlalu sejak pencampakan hati Kusuma. Akankah sang pujaan hati kembali ke naungan Kusuma? Memang tiada maaf bagi Elen. Tapi apa daya hati yang sudah hancur, Kusuma masih terguncang akan sikap Elen. Melihat kesedihan Kusuma, kalian mencoba menghibur Kusuma dengan mengirimkan gambar kucing. [a] Maka dari itu, kalian mencoba membuat script untuk mendownload 28 gambar dari "https://loremflickr.com/320/240/cat" menggunakan command wget dan menyimpan file dengan nama "pdkt_kusuma_NO" (contoh: pdkt_kusuma_1, pdkt_kusuma_2, pdkt_kusuma_3) serta jangan lupa untuk menyimpan log messages wget ke dalam sebuah file "wget.log". Karena kalian gak suka ribet, kalian membuat penjadwalan untuk menjalankan script download gambar tersebut. Namun, script download tersebut hanya
+berjalan[b] setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu Karena
+gambar yang didownload dari link tersebut bersifat random, maka ada kemungkinan
+gambar yang terdownload itu identik. Supaya gambar yang identik tidak dikira Kusuma
+sebagai spam, maka diperlukan sebuah script untuk memindahkan salah satu gambar
+identik. Setelah memilah gambar yang identik, maka dihasilkan gambar yang berbeda
+antara satu dengan yang lain. Gambar yang berbeda tersebut, akan kalian kirim ke
+Kusuma supaya hatinya kembali ceria. Setelah semua gambar telah dikirim, kalian akan
+selalu menghibur Kusuma, jadi gambar yang telah terkirim tadi akan kalian simpan
+kedalam folder /kenangan dan kalian bisa mendownload gambar baru lagi. [c] Maka dari
+itu buatlah sebuah script untuk mengidentifikasi gambar yang identik dari keseluruhan
+gambar yang terdownload tadi. Bila terindikasi sebagai gambar yang identik, maka
+sisakan 1 gambar dan pindahkan sisa file identik tersebut ke dalam folder ./duplicate
+dengan format filename "duplicate_nomor" (contoh : duplicate_200, duplicate_201).
+Setelah itu lakukan pemindahan semua gambar yang tersisa kedalam folder ./kenangan
+dengan format filename "kenangan_nomor" (contoh: kenangan_252, kenangan_253).
+Setelah tidak ada gambar di current directory, maka lakukan backup seluruh log menjadi
+ekstensi ".log.bak". Hint : Gunakan wget.log untuk membuat location.log yang isinya
+merupakan hasil dari grep "Location".
+```
+#### Penjelasan Soal
+Soal 3 diminta untuk mendownload gambar dari link di soal, lalu gambar akan ter-download secara acak dan ada kemungkinan gambar tersebut sama denga gambar yang lainnya. Gambar akan didownload setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu. Karena ada kemungkinan gambar yang ter-download sama dan tidak ingin dianggap sebagai spam, maka gambar akan dipisah. Gambar yang identik akan dimasukkan ke folder /duplicate, gambar yang fix dikirim dimasukkan ke folder /kenangan.
+
+##### Soal 3a
+Membuat script untuk mendownload 28 gambar dari link menggunakan command wget dan menyimpan file dengan nama "pdkt_kusuma_1", "pdkt_kusuma_2", dst.
+```
+for ((a=1; a<29; a++))
+do wget -o wget.log https://loremflickr.com/320/240/cat -O pdkt_kusuma_$a.jpg
+done
+```
+- `for ((a=1; a<29; a++))`, melakukan iterasi agar fungsi berjalan sebanyak 28 kali.
+- `do wget -o wget.log https://loremflickr.com/320/240/cat -O pdkt_kusuma_$a.jpg`, fungsi untuk mengunduh gambar dan nama file gambar terdapat nomor urut.
+
+##### Soal 3b
+Membuat crontab untuk membuat jadwal download sesuai yang diminta soal
+`#crontab : 5 6-23/8 * * 0-5`, melakukan jadwal download sesuai soal
+
+##### Soal 3c
+Gambar akan ter-download secara acak dan ada kemungkinan gambar tersebut sama denga gambar yang lainnya. Karena ada kemungkinan gambar yang ter-download sama dan tidak ingin dianggap sebagai spam, maka gambar akan dipisah. Gambar yang identik akan dimasukkan ke folder /duplicate, gambar yang fix dikirim dimasukkan ke folder /kenangan. Setelah tidak ada gambar di current directory, maka lakukan backup seluruh log menjadi ekstensi ".log.bak".
+
+Hambatan mengerjakan nomor 3 :
+- paham maksud soalnya, namun masih belum mengerti cara menerapkanya pada syntax
