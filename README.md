@@ -161,25 +161,7 @@ Sama halnya seperti soal 2c, hanya berubah pada variabel newfile.
 # **Nomor 3**
 ### Soal
 ```
-1 tahun telah berlalu sejak pencampakan hati Kusuma. Akankah sang pujaan hati kembali ke naungan Kusuma? Memang tiada maaf bagi Elen. Tapi apa daya hati yang sudah hancur, Kusuma masih terguncang akan sikap Elen. Melihat kesedihan Kusuma, kalian mencoba menghibur Kusuma dengan mengirimkan gambar kucing. [a] Maka dari itu, kalian mencoba membuat script untuk mendownload 28 gambar dari "https://loremflickr.com/320/240/cat" menggunakan command wget dan menyimpan file dengan nama "pdkt_kusuma_NO" (contoh: pdkt_kusuma_1, pdkt_kusuma_2, pdkt_kusuma_3) serta jangan lupa untuk menyimpan log messages wget ke dalam sebuah file "wget.log". Karena kalian gak suka ribet, kalian membuat penjadwalan untuk menjalankan script download gambar tersebut. Namun, script download tersebut hanya
-berjalan[b] setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu Karena
-gambar yang didownload dari link tersebut bersifat random, maka ada kemungkinan
-gambar yang terdownload itu identik. Supaya gambar yang identik tidak dikira Kusuma
-sebagai spam, maka diperlukan sebuah script untuk memindahkan salah satu gambar
-identik. Setelah memilah gambar yang identik, maka dihasilkan gambar yang berbeda
-antara satu dengan yang lain. Gambar yang berbeda tersebut, akan kalian kirim ke
-Kusuma supaya hatinya kembali ceria. Setelah semua gambar telah dikirim, kalian akan
-selalu menghibur Kusuma, jadi gambar yang telah terkirim tadi akan kalian simpan
-kedalam folder /kenangan dan kalian bisa mendownload gambar baru lagi. [c] Maka dari
-itu buatlah sebuah script untuk mengidentifikasi gambar yang identik dari keseluruhan
-gambar yang terdownload tadi. Bila terindikasi sebagai gambar yang identik, maka
-sisakan 1 gambar dan pindahkan sisa file identik tersebut ke dalam folder ./duplicate
-dengan format filename "duplicate_nomor" (contoh : duplicate_200, duplicate_201).
-Setelah itu lakukan pemindahan semua gambar yang tersisa kedalam folder ./kenangan
-dengan format filename "kenangan_nomor" (contoh: kenangan_252, kenangan_253).
-Setelah tidak ada gambar di current directory, maka lakukan backup seluruh log menjadi
-ekstensi ".log.bak". Hint : Gunakan wget.log untuk membuat location.log yang isinya
-merupakan hasil dari grep "Location".
+1 tahun telah berlalu sejak pencampakan hati Kusuma. Akankah sang pujaan hati kembali ke naungan Kusuma? Memang tiada maaf bagi Elen. Tapi apa daya hati yang sudah hancur, Kusuma masih terguncang akan sikap Elen. Melihat kesedihan Kusuma, kalian mencoba menghibur Kusuma dengan mengirimkan gambar kucing. [a] Maka dari itu, kalian mencoba membuat script untuk mendownload 28 gambar dari "https://loremflickr.com/320/240/cat" menggunakan command wget dan menyimpan file dengan nama "pdkt_kusuma_NO" (contoh: pdkt_kusuma_1, pdkt_kusuma_2, pdkt_kusuma_3) serta jangan lupa untuk menyimpan log messages wget ke dalam sebuah file "wget.log". Karena kalian gak suka ribet, kalian membuat penjadwalan untuk menjalankan script download gambar tersebut. Namun, script download tersebut hanya berjalan[b] setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu Karena gambar yang didownload dari link tersebut bersifat random, maka ada kemungkinan gambar yang terdownload itu identik. Supaya gambar yang identik tidak dikira Kusuma sebagai spam, maka diperlukan sebuah script untuk memindahkan salah satu gambar identik. Setelah memilah gambar yang identik, maka dihasilkan gambar yang berbeda antara satu dengan yang lain. Gambar yang berbeda tersebut, akan kalian kirim ke Kusuma supaya hatinya kembali ceria. Setelah semua gambar telah dikirim, kalian akan selalu menghibur Kusuma, jadi gambar yang telah terkirim tadi akan kalian simpan kedalam folder /kenangan dan kalian bisa mendownload gambar baru lagi. [c] Maka dari itu buatlah sebuah script untuk mengidentifikasi gambar yang identik dari keseluruhan gambar yang terdownload tadi. Bila terindikasi sebagai gambar yang identik, maka sisakan 1 gambar dan pindahkan sisa file identik tersebut ke dalam folder ./duplicate dengan format filename "duplicate_nomor" (contoh : duplicate_200, duplicate_201). Setelah itu lakukan pemindahan semua gambar yang tersisa kedalam folder ./kenangan dengan format filename "kenangan_nomor" (contoh: kenangan_252, kenangan_253). Setelah tidak ada gambar di current directory, maka lakukan backup seluruh log menjadi ekstensi ".log.bak". Hint : Gunakan wget.log untuk membuat location.log yang isinya merupakan hasil dari grep "Location".
 ```
 #### Penjelasan Soal
 Soal 3 diminta untuk mendownload gambar dari link di soal, lalu gambar akan ter-download secara acak dan ada kemungkinan gambar tersebut sama denga gambar yang lainnya. Gambar akan didownload setiap 8 jam dimulai dari jam 6.05 setiap hari kecuali hari Sabtu. Karena ada kemungkinan gambar yang ter-download sama dan tidak ingin dianggap sebagai spam, maka gambar akan dipisah. Gambar yang identik akan dimasukkan ke folder /duplicate, gambar yang fix dikirim dimasukkan ke folder /kenangan.
@@ -187,19 +169,72 @@ Soal 3 diminta untuk mendownload gambar dari link di soal, lalu gambar akan ter-
 ##### Soal 3a
 Membuat script untuk mendownload 28 gambar dari link menggunakan command wget dan menyimpan file dengan nama "pdkt_kusuma_1", "pdkt_kusuma_2", dst.
 ```
-for ((a=1; a<29; a++))
-do wget -o wget.log https://loremflickr.com/320/240/cat -O pdkt_kusuma_$a.jpg
+for ((a=1; a<29; a=a+1))
+do 
+wget -a /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log "https://loremflickr.com/320/240/cat" -O /home/ivanar/Downloads/SoalShiftModul1SisopNo3/pdkt_kusuma_$a.jpeg
 done
 ```
 - `for ((a=1; a<29; a++))`, melakukan iterasi agar fungsi berjalan sebanyak 28 kali.
-- `do wget -o wget.log https://loremflickr.com/320/240/cat -O pdkt_kusuma_$a.jpg`, fungsi untuk mengunduh gambar dan nama file gambar terdapat nomor urut.
+- `do wget -a /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log "https://loremflickr.com/320/240/cat" -O /home/ivanar/Downloads/SoalShiftModul1SisopNo3/pdkt_kusuma_$a.jpeg`
+`done`, fungsi untuk mengunduh gambar dan nama file gambar terdapat nomor urut.
 
 ##### Soal 3b
 Membuat crontab untuk membuat jadwal download sesuai yang diminta soal
-`#crontab : 5 6-23/8 * * 0-5`, melakukan jadwal download sesuai soal
+`crontab : 5 6-23/8 * * 0-5 bash /home/ivanar/soal3revisidownload.sh`, melakukan jadwal download sesuai soal
 
 ##### Soal 3c
 Gambar akan ter-download secara acak dan ada kemungkinan gambar tersebut sama denga gambar yang lainnya. Karena ada kemungkinan gambar yang ter-download sama dan tidak ingin dianggap sebagai spam, maka gambar akan dipisah. Gambar yang identik akan dimasukkan ke folder /duplicate, gambar yang fix dikirim dimasukkan ke folder /kenangan. Setelah tidak ada gambar di current directory, maka lakukan backup seluruh log menjadi ekstensi ".log.bak".
 
-Hambatan mengerjakan nomor 3 :
-- paham maksud soalnya, namun masih belum mengerti cara menerapkanya pada syntax
+`mkdir /home/ivanar/Downloads/SoalShiftModul1SisopNo3/kenangan
+ mkdir /home/ivanar/Downloads/SoalShiftModul1SisopNo3/duplicate
+
+ > /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log
+ > /home/ivanar/Downloads/SoalShiftModul1SisopNo3/location.log
+
+
+for ((a=1; a<29; a=a+1))
+do 
+wget -a /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log "https://loremflickr.com/320/240/cat" -O /home/ivanar/Downloads/SoalShiftModul1SisopNo3/pdkt_kusuma_$a.jpeg
+done
+
+grep "Location" /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log > /home/ivanar/Downloads/SoalShiftModul1SisopNo3/location.log
+
+readarray -t arr < /home/ivanar/Downloads/SoalShiftModul1SisopNo3/location.log
+flag=0
+for ((a=0; a<29; a=a+1))
+do
+	#echo $a
+	angkangelist=$(ls -1 /home/ivanar/Downloads/SoalShiftModul1SisopNo3/kenangan | wc -l)
+	angkangelist2=$(ls -1 /home/ivanar/Downloads/SoalShiftModul1SisopNo3/duplicate | wc -l)
+	flag=$((0))
+
+	for((i=0; i<$a; i=i+1)) 
+	do 
+
+	if [ $a -eq 0 ] 
+	then mv /home/ivanar/Downloads/SoalShiftModul1SisopNo3/pdkt_kusuma_1.jpeg kenangan/kenangan_1.jpeg		
+		elif [ "${arr[$a]}" == "${arr[$i]}" ] 
+		then 
+		flag=$((1))
+		break
+
+		elif [ "${arr[$i]}" == "((${arr[$i]}-1))" ]
+		then
+		flag=$((0))
+		fi
+		done
+	
+	if [ $flag -eq 0 ] 
+	then 
+	mv /home/ivanar/Downloads/SoalShiftModul1SisopNo3/pdkt_kusuma_"$(($a+1))".jpeg /home/ivanar/Downloads/SoalShiftModul1SisopNo3/kenangan/kenangan_"$(($angkangelist+1))".jpeg
+	echo case1
+
+	else 
+	echo case2
+	mv /home/ivanar/Downloads/SoalShiftModul1SisopNo3/pdkt_kusuma_"$(($a+1))".jpeg /home/ivanar/Downloads/SoalShiftModul1SisopNo3/duplicate/duplicate_"$(($angkangelist2+1))".jpeg
+	fi
+
+	done
+
+cat /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log >> /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log.bak
+cat /home/ivanar/Downloads/SoalShiftModul1SisopNo3/location.log >> /home/ivanar/Downloads/SoalShiftModul1SisopNo3/location.log.bak`
