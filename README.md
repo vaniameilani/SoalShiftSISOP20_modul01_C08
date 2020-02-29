@@ -130,14 +130,32 @@ mv "$namafile" "$newfile.txt"
 #echo $iniwaktu
 #echo $newfile
 ```
-
+- `newfile=${namafile%.*}`,command untuk memisahkan/memotong antara nama dengan tipefile. Sehingga, output dri variabel newfile adalah hanya nama file yang diinput.
+- `iniwaktu=$(ls -l $namafile | date +"%H" -r $namafile)`. `ls -l $namafile` berfungsi untuk menampilkan waktu dari nama `$namafile` yang diinput. `date +"%H"` untuk menampilkan waktu berupa jam, dan `-r` berfungsi untuk membaca waktu 'jam' dari `$namafile` tersebut.
+- Terdapat pengulangan yang memiliki syarat `$iniwaktu -gt 0` dimana hasil dari variabel iniwaktu lebih dari 0 yang berfungsi untuk menghitung berapa loncatan dari huruf awal ke huruf akhir dari proses pergesaran tersebut. Hal ini bertujuan untuk mengubah nama file dengan enkripsi.
+- ` tr '[a-zA-Z]' '[b-za-aB-ZA-A]'`. `[a-zA-Z]` mendeklarasikan karakter yang boleh diubah pada nama file. Selanjutnya, `b-za-aB-ZA-A]` bagian dari pergesaran huruf satu persatu secara maju hingga looping berhenti. Perhentian huruf terakhir itulah yang akan mengganti nama file.
+- ``iniwaktu=`expr $iniwaktu - 1``, bagian dari looping, dimana output pada variabel iniwaktu dikurangi 1 hingga sama dengan 0.
+- `mv "$namafile" "$newfile.txt"`, mengganti nama file lama menjadi file baru.
 
 ##### Soal 2d
-Melakukan dekripsi sehingga nama file bisa kembali normal.
+Melakukan dekripsi sehingga nama file kembali ke nama file lama.
+```
+namafile=$1
+newfile=${namafile%.*}
 
-Hambatan mengerjakan nomor 2 : 
-- masih bingung cara memasukkan variabel file baru ke dalam algoritma membuat enkripsi nama file (masih error)
-- belum menemukan cara melakukan dekripsi nama file
+iniwaktu=$(ls -l $namafile | date +"%H" -r $namafile)
+
+while [ $iniwaktu -gt 0 ]
+do
+	newfile=$(echo $newfile | tr '[b-za-aB-ZA-A]' '[a-zA-Z]')
+	iniwaktu=`expr $iniwaktu - 1`
+done
+
+mv "$namafile" "$newfile.txt"
+#echo $iniwaktu
+#echo $newfile
+```
+Sama halnya seperti soal 2c, hanya berubah pada variabel newfile.
 
 # **Nomor 3**
 ### Soal
