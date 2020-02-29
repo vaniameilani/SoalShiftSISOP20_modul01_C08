@@ -99,19 +99,38 @@ Menyimpan password acak yang telah dihasilkan ke dalam sebuah file.txt, dengan k
 password=$1
 code=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c28)
 
-if [[ $password =~ [^0-9] || [:punch:] ]];
+if [[ $password =~ [^0-9] || [:punct:] ]];
 then
-      newpass=$(echo $password | tr -cd [:alpha:])
+	newpass=$(echo $password | tr -cd [:alpha:])
 fi
 
-echo $code >> /home/
+echo $code >> /home/vaniameith/Documents/${newpass}.txt
 ```
-- `newpass=$1`, membuat variabel untuk menyimpan random password ke file baru
-- `echo $code > "$newpass".txt`, melakukan push random password ke file baru
+- `$password =~ [^0-9] || [:punct:]`, mendeteksi apakah inputan pada variable password terdapat angka atau special character (*^:, dll).
+- `newpass=$(echo $password | tr -cd [:alpha:])`. Pada `echo $password` difungsikan untuk mengeluarkan hasil/output untuk dibaca pada command sebelah nya. `tr -cd [:alpha:]`, command untuk menghapus angka & spesial character dan hanya menyisakan inputan berupa alphabet saja.
+-`echo $code`, menghasilkan output dari variabel code.
+-`>> /home/vaniameith/Documents/${newpass}.txt`. Tanda `>>` untuk memindahkan output variabel code seluruhnya ke Directory yang dtuju. Pada script tersebut, output dipindahkan ke Documents dengan nama dari hasil variabel newpass dan tipedata `.txt`.
 
 ##### Soal 2c
 Nama file yang telah dibuat kemudian dienkripsi dengan menggunakan konversi huruf (string manipulation) yang disesuaikan
 dengan jam(0-23) dibuatnya file tersebut dengan program, misal jika huruf yang diketik adalah p dan dibuat pada pukul 01.28, p adalah huruf ke 16 dan file dibuat pada jam 1 maka 16+1=17 dan huruf ke 17 adalah q dan begitu pula seterusnya.
+```
+namafile=$1
+newfile=${namafile%.*}
+
+iniwaktu=$(ls -l $namafile | date +"%H" -r $namafile)
+
+while [ $iniwaktu -gt 0 ]
+do
+	newfile=$(echo $newfile | tr '[a-zA-Z]' '[b-za-aB-ZA-A]')
+	iniwaktu=`expr $iniwaktu - 1`
+done
+
+mv "$namafile" "$newfile.txt"
+#echo $iniwaktu
+#echo $newfile
+```
+
 
 ##### Soal 2d
 Melakukan dekripsi sehingga nama file bisa kembali normal.
