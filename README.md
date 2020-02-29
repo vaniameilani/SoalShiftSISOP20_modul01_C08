@@ -1,8 +1,8 @@
 #SOALSHIFT SISTEM OPERASI 2020_MODUL 01
 ##KELOMPOK C08
 
-#### **IVAN ABDILLAH RAHMAN - 0511840000137**
-#### **VANIA MEILANI TAQIYYAH - 05111840000045**
+##### **IVAN ABDILLAH RAHMAN - 0511840000137**
+##### **VANIA MEILANI TAQIYYAH - 05111840000045**
 
 # **Nomor 1**
 ### Soal
@@ -30,7 +30,7 @@ printf "$soal1a\n\n"
 ```
 - `soal1a`, mendeklarasikan variabel untuk menyimpan hasil dari proses script itu sendiri.
 - `awk -F `\t``, membaca separator pada file.
-- `NR>1`, meloncati baris pertama yang berisi judul kolom pada file
+- `NR>1`, meloncati baris pertama yang berisi judul kolom pada file tersebut.
 - `{kolom[$13]+=$21}`, menghitung jumlah nilai pada kolom ke-21 dari array 'kolom' yang memiliki nama yang sama pada kolom ke-13
 ` `END{for(i in kolom) print i ",", kolom[i]`, melakukan loop sebanyak 'index' (i) pada array 'kolom' dan mencetak 'index' (yang berisi nama-nama region' dan jumlah profit 
 - `Sample-Superstore.tsv`, nama file 
@@ -44,9 +44,9 @@ Menentukan dua state yang memiliki profit terkecil berdasarkan hasil data 1a.
 soal1b=$(awk -F '\t' -v state="$soal1a" '($13~state) NR>1 {kolom[$11]+=$21} END{for(i in kolom) print i",",kolom[i]}' Sample-Superstore.tsv | sort -t, -g -k2 | awk -F, '{print $1}' | head -2)
 ```
 - `-v state="$soal1a"-, mendeklarasikan variabel state yang berisi hasil dari soal 1a.
-- `($13~state)`, memeriksa apakah data di kolom ke-13 memiliki string pada variabel state.
+- `($13~state)`, memeriksa apakah data di kolom ke-13 terdapat string yang sama pada variabel state.
 - `sort -t, -g -k2`, `g` mengurutkan nilai secara general sesuai field kolom ke-2.
-- `head -2`, mencetak hasil dua data pertama dari daftar hasil data tersebut.
+- `head -2`, mencetak hasil dua data pertama dari data tersebut.
 
 ##### Soal 1c
 Menentukan sepuluh nama produk yang memiliki profit terkecil berdasarkan hasil data 1b.
@@ -55,7 +55,8 @@ state1="Texas"
 state2="Illinois"
 awk -F '\t' -v state1="$state1" -v state2="$state2" '($11~state1) || ($11~state2) NR>1 {kolom[$17]+=$21} END{for(i in kolom) print i";",kolom[i]}' Sample-Superstore.tsv | sort -t; -g -k2 | awk -F, '{print $1}' | head -10
 ```
-- `($11~state1) || ($11~state2)`, menggunakan operasi OR karena untuk mendapatkan hasil dari keduanya.
+Script diatas sama halnya seperti pada soal 1b, hanya berbeda pada command : 
+-`($11~state1) || ($11~state2)`, menggunakan operasi OR karena untuk mendapatkan hasil dari keduanya.
 
 
 # **Nomor 2**
@@ -85,18 +86,26 @@ Soal 2 diminta untuk menyimpan random password di dalam sebuah file yang dapat d
 Membuat sebuah bash script yang dapat membuat sebuah random password secara acak sebanyak 28 karakter yang terdapat huruf
 besar, huruf kecil, dan angka.
 ```
-code=$(</dev/urandom tr -dc 'a-zA-Z0-9' | head -c 28)
+password=$1
+code=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c28)
 ```
 - `code`, mendeklarasikan variabel untuk menyimpan hasil dari proses script itu sendiri.
 - `</dev/urandom tr -dc 'a-zA-Z0-9` deklarasi dan fungsi untuk membuat randomm password, deklarasi terdiri dari huruf a-z, A-Z, dan 0-9
-- `head -c 28`, huruf dan angka yang dihasilkan mencapai 28 karakter
+- `head -c28`, huruf dan angka yang dihasilkan mencapai 28 karakter
 
 ##### Soal 2b 
 Menyimpan password acak yang telah dihasilkan ke dalam sebuah file.txt, dengan ketentuan nama file hanya boleh diisi huruf alphabet.
+```
+password=$1
+code=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c28)
 
-`newpass=$1
-code=$(</dev/urandom tr -dc 'a-zA-Z0-9' | head -c 28)
-echo $code > "$newpass".txt` 
+if [[ $password =~ [^0-9] || [:punch:] ]];
+then
+      newpass=$(echo $password | tr -cd [:alpha:])
+fi
+
+echo $code >> /home/
+```
 - `newpass=$1`, membuat variabel untuk menyimpan random password ke file baru
 - `echo $code > "$newpass".txt`, melakukan push random password ke file baru
 
