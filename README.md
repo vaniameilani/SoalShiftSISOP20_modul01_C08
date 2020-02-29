@@ -108,8 +108,8 @@ echo $code >> /home/vaniameith/Documents/${newpass}.txt
 ```
 - `$password =~ [^0-9] || [:punct:]`, mendeteksi apakah inputan pada variable password terdapat angka atau special character (*^:, dll).
 - `newpass=$(echo $password | tr -cd [:alpha:])`. Pada `echo $password` difungsikan untuk mengeluarkan hasil/output untuk dibaca pada command sebelah nya. `tr -cd [:alpha:]`, command untuk menghapus angka & spesial character dan hanya menyisakan inputan berupa alphabet saja.
--`echo $code`, menghasilkan output dari variabel code.
--`>> /home/vaniameith/Documents/${newpass}.txt`. Tanda `>>` untuk memindahkan output variabel code seluruhnya ke Directory yang dtuju. Pada script tersebut, output dipindahkan ke Documents dengan nama dari hasil variabel newpass dan tipedata `.txt`.
+- `echo $code`, menghasilkan output dari variabel code.
+- `>> /home/vaniameith/Documents/${newpass}.txt`. Tanda `>>` untuk memindahkan output variabel code seluruhnya ke Directory yang dtuju. Pada script tersebut, output dipindahkan ke Documents dengan nama dari hasil variabel newpass dan tipedata `.txt`.
 
 ##### Soal 2c
 Nama file yang telah dibuat kemudian dienkripsi dengan menggunakan konversi huruf (string manipulation) yang disesuaikan
