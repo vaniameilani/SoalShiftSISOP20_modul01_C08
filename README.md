@@ -88,6 +88,7 @@ besar, huruf kecil, dan angka.
 ```
 password=$1
 code=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c28)
+echo $code
 ```
 - `code`, mendeklarasikan variabel untuk menyimpan hasil dari proses script itu sendiri.
 - `</dev/urandom tr -dc 'a-zA-Z0-9` deklarasi dan fungsi untuk membuat randomm password, deklarasi terdiri dari huruf a-z, A-Z, dan 0-9
