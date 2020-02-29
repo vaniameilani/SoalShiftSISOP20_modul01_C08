@@ -235,6 +235,8 @@ do
 	fi
 
 	done
-
+	
 cat /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log >> /home/ivanar/Downloads/SoalShiftModul1SisopNo3/wget.log.bak
 cat /home/ivanar/Downloads/SoalShiftModul1SisopNo3/location.log >> /home/ivanar/Downloads/SoalShiftModul1SisopNo3/location.log.bak`
+
+
