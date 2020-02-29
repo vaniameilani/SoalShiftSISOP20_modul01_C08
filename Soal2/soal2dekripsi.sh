@@ -1,13 +1,17 @@
 #!/bin/bash
 
-#declare array
-hurufbesar=({A..Z})
-hurufkecil=({a..z})
+namafile=$1
+newfile=${namafile%.*}
 
-hrfA=${hurufbesar[(0+$jam)]}
-hrfZ=${hurufbesar[(25+jam)%26]}
-hrfa=${hurufkecil[(0+$jam]}
-hrfz=${hurufkecil[(25+jam)%26]}
+iniwaktu=$(ls -l $namafile | date +"%H" -r $namafile)
 
-#nama file setelah didekripsi :
+while [ $iniwaktu -gt 0 ]
+do
+	newfile=$(echo $newfile | tr '[b-za-aB-ZA-A]' '[a-zA-Z]')
+	iniwaktu=`expr $iniwaktu - 1`
+done
+
+mv "$namafile" "$newfile.txt"
+#echo $iniwaktu
+#echo $newfile
 
