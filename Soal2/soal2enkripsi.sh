@@ -1,25 +1,17 @@
 #!/bin/bash
 
-#newpass=$1
-#code=$(</dev/urandom tr -dc 'a-zA-Z0-9' | head -c 28)
-#echo $code > "$newpass".txt
+namafile=$1
+newfile=${namafile%.*}
 
-echo -c "Nama file : "
-read file_sebelum
+iniwaktu=$(ls -l $namafile | date +"%H" -r $namafile)
 
-jam=$(date + "%H")
+while [ $iniwaktu -gt 0 ]
+do
+	newfile=$(echo $newfile | tr '[a-zA-Z]' '[b-za-aB-ZA-A]')
+	iniwaktu=`expr $iniwaktu - 1`
+done
 
-#declare array
-hurufbesar=({A..Z})
-hurufkecil=({a..z})
+mv "$namafile" "$newfile.txt"
+#echo $iniwaktu
+#echo $newfile
 
-hrfA=${hurufbesar[(0+$jam)]}
-hrfZ=${hurufbesar[(25+jam)%26]}
-hrfa=${hurufkecil[(0+$jam]}
-hrfz=${hurufkecil[(25+jam)%26]}
-
-#nama file setelah dienkripsi
-file_setelah="$(echo "${file_sebelum}" | tr [A-Z] ["${hrfA}"-ZA-"${hrfZ}"] | tr [a-z] ["${hrfa}"-za-"${hrfz}")"
-
-# Buat file-nya
-echo "$code" > "${file_setelah}.txt"
